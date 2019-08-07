@@ -1,2 +1,22 @@
 @import '~vuetify/dist/vuetify.min.css';
-@import '~@mdi/font/css/materialdesignicons.min.css'
+@import '~@mdi/font/css/materialdesignicons.min.css';
+
+body .v-application {
+    background: linear-gradient(45deg, rgb(239, 7, 129) 0%, rgb(239, 7, 129) 6%,rgb(208, 10, 112) 6%, rgb(208, 10, 112) 25%,rgb(177, 13, 96) 25%, rgb(177, 13, 96) 40%,rgb(147, 16, 79) 40%, rgb(147, 16, 79) 45%,rgb(116, 19, 62) 45%, rgb(116, 19, 62) 53%,rgb(85, 22, 46) 53%, rgb(85, 22, 46) 66%,rgb(54, 25, 29) 66%, rgb(54, 25, 29) 100%) !important;
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.box {
+    background: rgba(0, 0, 0, .4) !important;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+/* Removes the weird gap on the toolbar */
+.v-toolbar {
+    flex: none !important;
+}
