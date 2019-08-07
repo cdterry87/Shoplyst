@@ -24,3 +24,23 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// User authenticated routes
+Route::group(['middleware' => 'auth'], function () {
+    // Application api routes
+    Route::prefix('api')->group(function () {
+        // Lists
+        Route::resource('/lists', 'ListController');
+
+        // List Items
+        Route::get('/items/{list}', 'ListItemController@index');
+        Route::resource('/items', 'ListItemController');
+
+        // Users
+        Route::get('/user/', 'UserController@index');
+        Route::put('/user/', 'UserController@update');
+    });
+
+    // Catch-all route
+    Route::get('/{any}', 'HomeController@index')->where('any', '.*');
+});
