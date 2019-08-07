@@ -3,7 +3,7 @@
         <v-content>
             <v-container fluid fill-height>
                 <v-layout align-center justify-center wrap>
-                    <v-flex xs12 sm10 md5>
+                    <v-flex xs12 sm10 md5 class="box">
                         <div class="text-center mb-3">
                             <h1 class="display-1">{{ title }}</h1>
                             <h2 class="title mt-2">Reset your password using the form <b></b>elow.</h2>
@@ -11,8 +11,8 @@
                         <div class="mt-3 mb-5" v-if="errorMessages.length > 0">
                             <Errors :errors="errorMessages" />
                         </div>
-                        <v-text-field prepend-icon="lock" id="password" name="password" label="Password" type="password" filled></v-text-field>
-                        <v-text-field prepend-icon="lock" id="password_confirmation"  name="password_confirmation" filled label="Confirm Password" type="password"></v-text-field>
+                        <v-text-field prepend-icon="mdi-lock" id="password" name="password" label="Password" type="password" filled></v-text-field>
+                        <v-text-field prepend-icon="mdi-lock" id="password_confirmation"  name="password_confirmation" filled label="Confirm Password" type="password"></v-text-field>
                         <div class="text-center">
                             <v-btn outlined text type="submit">Reset Password</v-btn>
                             <v-btn text href="/login">Login</v-btn>

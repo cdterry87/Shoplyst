@@ -3,7 +3,7 @@
         <v-content>
             <v-container fluid fill-height>
                 <v-layout align-center justify-center wrap>
-                    <v-flex xs12 sm10 md5>
+                    <v-flex xs12 sm10 md5 class="box">
                         <div class="text-center mb-5">
                             <h1 class="display-1">{{ title }}</h1>
                             <h2 class="title mt-2">Sign in to do someting great!</h2>
@@ -11,7 +11,7 @@
                         <div class="mt-3 mb-5" v-if="errorMessages.length > 0">
                             <Errors :errors="errorMessages" />
                         </div>
-                        <v-text-field color="white" label="Email" filled prepend-inner-icon="mdi-mail" id="email" name="email" type="text"></v-text-field>
+                        <v-text-field color="white" label="Email" filled prepend-inner-icon="mdi-email" id="email" name="email" type="text"></v-text-field>
                         <v-text-field color="white" label="Password" filled prepend-inner-icon="mdi-lock" id="password" name="password" type="password"></v-text-field>
                         <v-checkbox color="white" id="remember" name="remember" label="Remember Me"></v-checkbox>
                         <div class="text-center">
