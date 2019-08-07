@@ -18,9 +18,10 @@ class CreateListsItemsTable extends Migration
             $table->unsignedBigInteger('list_id');
             $table->foreign('list_id')->references('id')->on('lists')->onDelete('cascade');
             $table->string('name');
-            $table->decimal('price');
-            $table->integer('quantity')->default(1);
-            $table->integer('reminder');
+            $table->decimal('price')->nullable();
+            $table->integer('quantity')->nullable()->default(1);
+            $table->integer('reminder')->nullable();
+            $table->boolean('complete')->default(false);
             $table->timestamps();
         });
     }

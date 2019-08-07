@@ -26,6 +26,6 @@ class Lists extends Model
 
     public function items()
     {
-        return $this->hasMany('App\ListItems');
+        return $this->hasMany('App\ListItems', 'list_id');
     }
 }

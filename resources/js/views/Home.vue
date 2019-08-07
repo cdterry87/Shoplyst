@@ -22,8 +22,13 @@
                 <div class="title text-center mb-3">
                     My Shopping Lists
                 </div>
-                <div v-if="loadingLists">
-
+                <div v-if="loadingLists" class="mt-3 text-center">
+                    <v-progress-circular
+                    :size="150"
+                    width="15"
+                    color="pink darken-2"
+                    indeterminate
+                    >Loading...</v-progress-circular>
                 </div>
                 <div v-else>
                     <div v-if="lists.length > 0">
@@ -49,20 +54,25 @@
 </template>
 
 <script>
+    import Event from './../events'
+
     export default {
         name: 'Home',
         data() {
             return {
-                loadingLists: false,
+                loadingLists: true,
                 name: '',
                 lists: []
             }
         },
         methods: {
             getLists() {
+                this.loadingLists = true
+
                 axios.get('/api/lists')
                 .then(response => {
                     this.lists = response.data
+                    this.loadingLists = false
                 })
                 .catch(function (error) {
                     Event.$emit('error', 'Failed to load lists.')

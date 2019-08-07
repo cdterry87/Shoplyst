@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Lists;
+use App\ListItems;
 use Illuminate\Http\Request;
 
 class ListItemController extends Controller
@@ -11,19 +13,10 @@ class ListItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Lists $list)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // return response()->json($list->items()->orderBy('name')->get());
+        return response()->json($list->with('items')->orderBy('name')->get());
     }
 
     /**
@@ -34,7 +27,20 @@ class ListItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = ListItems::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'reminder' => $request->reminder,
+            'complete' => $request->complete,
+            'list_id' => $request->list_id,
+        ]);
+
+        return response()->json([
+            'status' => (bool) $item,
+            'data' => $item,
+            'message' => $item ? 'Your item was added successfully!' : 'An error occurred while trying to add your item. Try again later.'
+        ]);
     }
 
     /**
@@ -43,20 +49,9 @@ class ListItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ListItems $item)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json($item);
     }
 
     /**
@@ -66,9 +61,16 @@ class ListItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ListItems $item)
     {
-        //
+        $status = $item->update(
+            $request->only(['name', 'price', 'quantity', 'reminder', 'complete'])
+        );
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Your item was updated successfully.' : 'An error occurred while trying to update your item. Try again later.'
+        ]);
     }
 
     /**
@@ -77,8 +79,13 @@ class ListItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ListItems $item)
     {
-        //
+        $status = $item->delete();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Your item was deleted successfully.' : 'An error occurred while trying to delete your item. Try again later.'
+        ]);
     }
 }
