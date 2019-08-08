@@ -1,7 +1,7 @@
 <template>
     <v-container fluid grid-list-md>
         <v-layout row>
-            <v-flex xs12 sm8 offset-sm2 md6 offset-md3>
+            <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
                 <div class="title text-center mb-3">
                     Add Shopping List
                 </div>
@@ -18,18 +18,11 @@
             </v-flex>
         </v-layout>
         <v-layout row class="mt-3">
-            <v-flex xs12 sm8 offset-sm2 md6 offset-md3>
+            <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
                 <div class="title text-center mb-3">
                     My Shopping Lists
                 </div>
-                <div v-if="loadingLists" class="mt-3 text-center">
-                    <v-progress-circular
-                    :size="150"
-                    width="15"
-                    color="pink darken-2"
-                    indeterminate
-                    >Loading...</v-progress-circular>
-                </div>
+                <Loading v-if="loadingLists" class="mt-3" />
                 <div v-else>
                     <div v-if="lists.length > 0">
                         <v-list-item v-for="(list, index) in lists" :key="index" :to="'/list/' + list.id">
@@ -55,9 +48,13 @@
 
 <script>
     import Event from './../events'
+    import Loading from '../components/Loading'
 
     export default {
         name: 'Home',
+        components: {
+            Loading
+        },
         data() {
             return {
                 loadingLists: true,

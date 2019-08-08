@@ -1,7 +1,7 @@
 <template>
     <v-container fluid grid-list-md>
         <v-layout row>
-            <v-flex xs12 sm8 offset-sm2 md6 offset-md3>
+            <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
                 <div class="text-center mb-3">
                     <h1 class="headline">{{ list.name }}</h1>
                     <h2 class="body-2 grey--text text--lighten-1">{{ list.created_date }}</h2>
@@ -36,14 +36,7 @@
                         </v-form>
                     </div>
                 </div>
-                <div v-if="loadingItems" class="mt-3 text-center">
-                    <v-progress-circular
-                    :size="150"
-                    width="15"
-                    color="pink darken-2"
-                    indeterminate
-                    >Loading...</v-progress-circular>
-                </div>
+                <Loading v-if="loadingItems" class="mt-3" />
                 <div v-else>
                     <div v-if="items.length > 0">
                         <v-list-item v-for="(item, index) in items" :key="index">
@@ -81,10 +74,14 @@
 
 <script>
     import Event from './../events'
+    import Loading from '../components/Loading'
 
     export default {
         name: 'List',
         props: ['id'],
+        components: {
+            Loading
+        },
         data() {
             return {
                 showAddForm: false,
@@ -118,12 +115,10 @@
             addItem() {
                 if (this.$refs.form.validate()) {
                     let name = this.name
-                    let price = this.price
                     let quantity = this.quantity
-                    let reminder = this.reminder
                     let list_id = this.id
 
-                    axios.post('/api/items', { list_id, name, price, quantity, reminder })
+                    axios.post('/api/items', { list_id, name, quantity })
                     .then(response => {
                         this.getItems()
 
@@ -134,10 +129,9 @@
                     })
 
                     this.name = ''
-                    this.quantity = ''
-                    this.price = ''
-                    this.reminder = ''
+                    this.quantity = '1'
                     this.$refs.form.resetValidation()
+                    this.$refs.form.$el.name.focus()
                 }
             },
             completeItem(item_id) {

@@ -33,3 +33,7 @@ body .v-application .logo,
   padding: 0 !important;
 }
 
+.v-btn.add.v-size--x-large {
+  min-width: 60px;
+}
+

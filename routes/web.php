@@ -41,8 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/items/{item}/incomplete', 'ListItemController@incomplete');
 
         // Users
-        // Route::get('/user/', 'UserController@index');
-        // Route::put('/user/', 'UserController@update');
+        Route::get('/user', 'UserController@index');
+        Route::post('/account', 'UserController@account');
+        Route::post('/password', 'UserController@password');
     });
 
     // Catch-all route
