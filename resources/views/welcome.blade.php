@@ -4,7 +4,7 @@
     <div id="welcome">
         <div class="content">
             <div class="title m-b-md">
-                {{ config('app.name', 'Laravel') }}
+                <span class="logo">{{ config('app.name', 'Laravel') }}</span>
                 <div class="subtitle m-t-sm">
                     Take the guess work out of your groceries!
                 </div>
