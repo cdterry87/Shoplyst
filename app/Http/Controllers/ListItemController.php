@@ -28,10 +28,7 @@ class ListItemController extends Controller
     {
         $item = ListItems::create([
             'name' => $request->name,
-            'price' => $request->price,
             'quantity' => $request->quantity,
-            'reminder' => $request->reminder,
-            'complete' => $request->complete,
             'list_id' => $request->list_id,
         ]);
 
@@ -63,7 +60,7 @@ class ListItemController extends Controller
     public function update(Request $request, ListItems $item)
     {
         $status = $item->update(
-            $request->only(['name', 'price', 'quantity', 'reminder', 'complete'])
+            $request->only(['name', 'quantity'])
         );
 
         return response()->json([

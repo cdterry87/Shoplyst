@@ -2,34 +2,39 @@
     <v-container fluid grid-list-md>
         <v-layout row>
             <v-flex xs12 sm8 offset-sm2 md6 offset-md3>
-                <div class="title text-center mb-3">
-                    Add Item to List
+                <div class="text-center mb-3">
+                    <h1 class="headline">{{ list.name }}</h1>
+                    <h2 class="body-2 grey--text text--lighten-1">{{ list.created_date }}</h2>
                 </div>
-                <v-form method="POST" id="listForm" @submit.prevent="addItem" ref="form" lazy-validation>
-                    <v-layout row>
-                        <v-flex xs12>
-                            <v-text-field hide-details color="white" v-model="name" label="New Item" filled prepend-inner-icon="mdi-basket" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'Item name is required']" required></v-text-field>
-                        </v-flex>
-                        <v-flex xs5>
-                            <v-text-field hide-details color="white" v-model="quantity" label="Quantity" filled prepend-inner-icon="mdi-numeric" id="quantity" name="quantity" type="text" required></v-text-field>
-                        </v-flex>
-                        <v-flex xs5>
-                            <v-text-field hide-details color="white" v-model="price" label="Price" filled prepend-inner-icon="mdi-currency-usd" id="price" name="price" type="text"></v-text-field>
-                        </v-flex>
-                        <v-flex xs2>
-                            <v-btn type="submit" block x-large class="pink darken-2 add">
-                                <v-icon>mdi-plus</v-icon>
-                                <span v-if="$vuetify.breakpoint.mdAndUp">Add</span>
-                            </v-btn>
-                        </v-flex>
-                    </v-layout>
-                </v-form>
-            </v-flex>
-        </v-layout>
-        <v-layout row class="mt-3">
-            <v-flex xs12 sm8 offset-sm2 md6 offset-md3>
-                <div class="title text-center mb-3">
-                    {{ list.name }}
+                <div>
+                    <v-btn block class="pink darken-2 mb-2" @click="showAddForm = !showAddForm">
+                        <span v-if="!showAddForm">
+                            <v-icon>mdi-plus</v-icon>
+                            <span>Add Item to List</span>
+                        </span>
+                        <span v-else>
+                            <v-icon>mdi-minus</v-icon>
+                            <span>Cancel</span>
+                        </span>
+                    </v-btn>
+                    <div v-if="showAddForm">
+                        <v-form method="POST" id="listForm" @submit.prevent="addItem" ref="form" lazy-validation>
+                            <v-layout row>
+                                <v-flex xs12>
+                                    <v-text-field hide-details color="white" v-model="name" label="New Item" filled prepend-inner-icon="mdi-basket" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'Item name is required']" required></v-text-field>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <v-text-field hide-details color="white" v-model="quantity" label="Quantity" filled prepend-inner-icon="mdi-numeric" id="quantity" name="quantity" type="text" :rules="[v => v > 0 || 'Quantity must be greater than 0']" required></v-text-field>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-btn type="submit" block x-large class="pink darken-2 add">
+                                        <v-icon>mdi-plus</v-icon>
+                                        <span v-if="$vuetify.breakpoint.mdAndUp">Add</span>
+                                    </v-btn>
+                                </v-flex>
+                            </v-layout>
+                        </v-form>
+                    </div>
                 </div>
                 <div v-if="loadingItems" class="mt-3 text-center">
                     <v-progress-circular
@@ -53,16 +58,9 @@
                                 </v-btn>
                             </v-list-item-icon>
                             <v-list-item-content>
-                                <v-list-item-title v-html="item.name"></v-list-item-title>
+                                <v-list-item-title>{{ item.name }}</v-list-item-title>
                                 <v-list-item-subtitle>
-                                    <v-layout row>
-                                        <v-flex xs6>
-                                            Qty: {{ item.quantity }}
-                                        </v-flex>
-                                        <v-flex xs6>
-                                            Price: {{ item.price }}
-                                        </v-flex>
-                                    </v-layout>
+                                    Qty: {{ item.quantity }}
                                 </v-list-item-subtitle>
                             </v-list-item-content>
                             <v-list-item-action>
@@ -89,11 +87,10 @@
         props: ['id'],
         data() {
             return {
+                showAddForm: false,
                 loadingItems: false,
                 name: '',
-                price: '',
                 quantity: '1',
-                reminder: '',
                 list: '',
                 items: []
             }
@@ -147,8 +144,6 @@
                 axios.post('/api/items/' + item_id + '/complete')
                 .then(response => {
                     this.getItems()
-
-                    Event.$emit('success', response.data.message)
                 })
                 .catch(function (error) {
                     Event.$emit('error', response.data.message)
@@ -158,8 +153,6 @@
                 axios.post('/api/items/' + item_id + '/incomplete')
                 .then(response => {
                     this.getItems()
-
-                    Event.$emit('success', response.data.message)
                 })
                 .catch(function (error) {
                     Event.$emit('error', response.data.message)

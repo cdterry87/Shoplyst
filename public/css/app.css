@@ -16,6 +16,11 @@ a {
   color: inherit !important;
 }
 
+body .v-application .logo,
+.logo {
+  font-family: "Lobster", sans-serif !important;
+}
+
 /* Removes the weird gap on the toolbar */
 
 .v-toolbar {
