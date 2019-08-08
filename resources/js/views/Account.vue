@@ -1,5 +1,11 @@
 <template>
     <v-container fluid grid-list-md>
+        <div class="text-center mb-4">
+            <v-btn color="pink darken-2" @click="logout">
+                <v-icon>mdi-logout</v-icon>
+                Sign Out
+            </v-btn>
+        </div>
         <v-layout row>
             <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
                 <div class="title text-center mb-3">
@@ -53,6 +59,12 @@
             }
         },
         methods: {
+            logout() {
+                axios.get('/api/logout')
+                .then(function () {
+                    location.reload()
+                });
+            },
             getUser() {
                 axios.get('/api/user')
                 .then(response => {

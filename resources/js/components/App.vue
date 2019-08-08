@@ -47,14 +47,6 @@ export default {
             },
         }
     },
-    methods: {
-        logout() {
-            axios.get('/api/logout')
-            .then(function () {
-                location.reload()
-            });
-        }
-    },
     created() {
         Event.$on('success', message => {
             this.snackbar.message = message
