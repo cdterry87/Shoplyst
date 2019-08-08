@@ -46,7 +46,7 @@ class ListController extends Controller
      */
     public function show(Lists $list)
     {
-        return response()->json($list)->where('id', $list->id)->first();
+        return response()->json($list->where('id', $list->id)->first());
     }
 
     /**

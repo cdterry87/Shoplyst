@@ -23,5 +23,6 @@ a {
 
 /* Removes the extra padding on the add button */
 .v-btn.add {
-    min-width: 20px !important;
+    // min-width: 20px !important;
+    padding: 0 !important;
 }

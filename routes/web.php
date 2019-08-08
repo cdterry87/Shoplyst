@@ -37,8 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/items', 'ListItemController');
 
         // Users
-        Route::get('/user/', 'UserController@index');
-        Route::put('/user/', 'UserController@update');
+        // Route::get('/user/', 'UserController@index');
+        // Route::put('/user/', 'UserController@update');
     });
 
     // Catch-all route

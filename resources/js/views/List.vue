@@ -6,7 +6,23 @@
                     Add Item to List
                 </div>
                 <v-form method="POST" id="listForm" @submit.prevent="addItem" ref="form" lazy-validation>
-                    <v-text-field hide-details color="white" v-model="name" label="New Item" filled prepend-inner-icon="mdi-basket" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'List name is required']" required></v-text-field>
+                    <v-layout row>
+                        <v-flex xs12>
+                            <v-text-field hide-details color="white" v-model="name" label="New Item" filled prepend-inner-icon="mdi-basket" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'Item name is required']" required></v-text-field>
+                        </v-flex>
+                        <v-flex xs5>
+                            <v-text-field hide-details color="white" v-model="quantity" label="Quantity" filled prepend-inner-icon="mdi-numeric" id="quantity" name="quantity" type="text" value="1" required></v-text-field>
+                        </v-flex>
+                        <v-flex xs5>
+                            <v-text-field hide-details color="white" v-model="price" label="Price" filled prepend-inner-icon="mdi-currency-usd" id="price" name="price" type="text"></v-text-field>
+                        </v-flex>
+                        <v-flex xs2>
+                            <v-btn type="submit" block x-large class="pink darken-2 add">
+                                <v-icon>mdi-plus</v-icon>
+                                <span v-if="$vuetify.breakpoint.mdAndUp">Add</span>
+                            </v-btn>
+                        </v-flex>
+                    </v-layout>
                 </v-form>
             </v-flex>
         </v-layout>
@@ -26,9 +42,28 @@
                 <div v-else>
                     <div v-if="items.length > 0">
                         <v-list-item v-for="(item, index) in items" :key="index">
+                            <v-list-item-icon v-if="item.complete">
+                                <v-btn icon>
+                                    <v-icon>mdi-checkbox-marked</v-icon>
+                                </v-btn>
+                            </v-list-item-icon>
+                            <v-list-item-icon v-else>
+                                <v-btn icon>
+                                    <v-icon>mdi-checkbox-blank-outline</v-icon>
+                                </v-btn>
+                            </v-list-item-icon>
                             <v-list-item-content>
                                 <v-list-item-title v-html="item.name"></v-list-item-title>
-                                <v-list-item-subtitle>{{ item.price }} {{ item.quantity }}</v-list-item-subtitle>
+                                <v-list-item-subtitle>
+                                    <v-layout row>
+                                        <v-flex xs6>
+                                            Qty: {{ item.quantity }}
+                                        </v-flex>
+                                        <v-flex xs6>
+                                            Price: {{ item.price }}
+                                        </v-flex>
+                                    </v-layout>
+                                </v-list-item-subtitle>
                             </v-list-item-content>
                             <v-list-item-action>
                                 <v-btn icon @click="deleteItem($event, item.id)">
@@ -64,13 +99,18 @@
             }
         },
         methods: {
+            getList() {
+                axios.get('/api/lists/' + this.id)
+                .then(response => {
+                    this.list = response.data
+                })
+            },
             getItems() {
                 this.loadingItems = true
 
                 axios.get('/api/items/' + this.id)
                 .then(response => {
-                    this.list = response.data[0]
-                    this.items = this.list.items
+                    this.items = response.data
 
                     this.loadingItems = false
                 })
@@ -118,6 +158,7 @@
             }
         },
         mounted() {
+            this.getList()
             this.getItems()
         }
     }

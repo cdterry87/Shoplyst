@@ -15,8 +15,7 @@ class ListItemController extends Controller
      */
     public function index(Lists $list)
     {
-        // return response()->json($list->items()->orderBy('name')->get());
-        return response()->json($list->with('items')->orderBy('name')->get());
+        return response()->json($list->items()->orderBy('name')->get());
     }
 
     /**

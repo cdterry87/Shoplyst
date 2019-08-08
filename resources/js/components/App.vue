@@ -16,7 +16,7 @@
             <v-content>
                 <router-view></router-view>
 
-                <v-snackbar v-model="snackbar.enabled" :color="snackbar.color" :bottom="true" :right="true" :timeout="snackbar.timeout">
+                <v-snackbar v-model="snackbar.enabled" :color="snackbar.color" :bottom="true" :timeout="snackbar.timeout">
                     {{ snackbar.message }}
                     <v-btn color="white" text @click="snackbar.enabled = false"><v-icon>mdi-close</v-icon></v-btn>
                 </v-snackbar>
@@ -40,8 +40,6 @@ export default {
                 enabled: false,
                 message: '',
                 timeout: 5000,
-                y: 'bottom',
-                x: 'right',
                 color: ''
             },
         }
@@ -57,17 +55,17 @@ export default {
     created() {
         Event.$on('success', message => {
             this.snackbar.message = message
-            this.snackbar.color = 'success'
+            this.snackbar.color = 'pink darken-2'
             this.snackbar.enabled = true
         })
         Event.$on('warning', message => {
             this.snackbar.message = message
-            this.snackbar.color = 'warning'
+            this.snackbar.color = 'blue-grey darken-3'
             this.snackbar.enabled = true
         })
         Event.$on('error', message => {
             this.snackbar.message = message
-            this.snackbar.color = 'error'
+            this.snackbar.color = 'purple darken-4'
             this.snackbar.enabled = true
         })
     }
