@@ -36,6 +36,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/items/{list}', 'ListItemController@index');
         Route::resource('/items', 'ListItemController');
 
+        // Complete / Incomplete
+        Route::post('/items/{item}/complete', 'ListItemController@complete');
+        Route::post('/items/{item}/incomplete', 'ListItemController@incomplete');
+
         // Users
         // Route::get('/user/', 'UserController@index');
         // Route::put('/user/', 'UserController@update');

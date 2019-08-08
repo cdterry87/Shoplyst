@@ -87,4 +87,38 @@ class ListItemController extends Controller
             'message' => $status ? 'Your item was deleted successfully.' : 'An error occurred while trying to delete your item. Try again later.'
         ]);
     }
+
+    /**
+     * Mark as complete
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function complete(ListItems $item)
+    {
+        $item->complete = 1;
+        $status = $item->save();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Item is checked' : 'Item could not be checked.'
+        ]);
+    }
+
+    /**
+     * Mark as incomplete.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function incomplete(ListItems $item)
+    {
+        $item->complete = 0;
+        $status = $item->save();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Item is now unchecked!' : 'Item could not be unchecked.'
+        ]);
+    }
 }

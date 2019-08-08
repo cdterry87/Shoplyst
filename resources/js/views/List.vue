@@ -11,7 +11,7 @@
                             <v-text-field hide-details color="white" v-model="name" label="New Item" filled prepend-inner-icon="mdi-basket" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'Item name is required']" required></v-text-field>
                         </v-flex>
                         <v-flex xs5>
-                            <v-text-field hide-details color="white" v-model="quantity" label="Quantity" filled prepend-inner-icon="mdi-numeric" id="quantity" name="quantity" type="text" value="1" required></v-text-field>
+                            <v-text-field hide-details color="white" v-model="quantity" label="Quantity" filled prepend-inner-icon="mdi-numeric" id="quantity" name="quantity" type="text" required></v-text-field>
                         </v-flex>
                         <v-flex xs5>
                             <v-text-field hide-details color="white" v-model="price" label="Price" filled prepend-inner-icon="mdi-currency-usd" id="price" name="price" type="text"></v-text-field>
@@ -43,11 +43,11 @@
                     <div v-if="items.length > 0">
                         <v-list-item v-for="(item, index) in items" :key="index">
                             <v-list-item-icon v-if="item.complete">
-                                <v-btn icon>
+                                <v-btn icon @click="incompleteItem(item.id)">
                                     <v-icon>mdi-checkbox-marked</v-icon>
                                 </v-btn>
                             </v-list-item-icon>
-                            <v-list-item-icon v-else>
+                            <v-list-item-icon v-else @click="completeItem(item.id)">
                                 <v-btn icon>
                                     <v-icon>mdi-checkbox-blank-outline</v-icon>
                                 </v-btn>
@@ -92,7 +92,7 @@
                 loadingItems: false,
                 name: '',
                 price: '',
-                quantity: '',
+                quantity: '1',
                 reminder: '',
                 list: '',
                 items: []
@@ -142,6 +142,28 @@
                     this.reminder = ''
                     this.$refs.form.resetValidation()
                 }
+            },
+            completeItem(item_id) {
+                axios.post('/api/items/' + item_id + '/complete')
+                .then(response => {
+                    this.getItems()
+
+                    Event.$emit('success', response.data.message)
+                })
+                .catch(function (error) {
+                    Event.$emit('error', response.data.message)
+                })
+            },
+            incompleteItem(item_id) {
+                axios.post('/api/items/' + item_id + '/incomplete')
+                .then(response => {
+                    this.getItems()
+
+                    Event.$emit('success', response.data.message)
+                })
+                .catch(function (error) {
+                    Event.$emit('error', response.data.message)
+                })
             },
             deleteItem(e, id) {
                 e.preventDefault();
