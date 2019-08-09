@@ -36,8 +36,7 @@
                         </v-form>
                     </div>
                 </div>
-                <Loading v-if="loadingItems" class="mt-3" />
-                <div v-else>
+                <div>
                     <div v-if="items.length > 0">
                         <v-list dense color="transparent">
                             <v-list-item v-for="(item, index) in items" :key="index">

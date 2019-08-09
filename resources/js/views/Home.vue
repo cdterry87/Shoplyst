@@ -22,8 +22,7 @@
                 <div class="title text-center mb-3">
                     My Shopping Lists
                 </div>
-                <Loading v-if="loadingLists" class="mt-3" />
-                <div v-else>
+                <div>
                     <div v-if="lists.length > 0">
                         <v-list-item v-for="(list, index) in lists" :key="index" :to="'/list/' + list.id">
                             <v-list-item-content>
