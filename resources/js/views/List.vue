@@ -39,29 +39,31 @@
                 <Loading v-if="loadingItems" class="mt-3" />
                 <div v-else>
                     <div v-if="items.length > 0">
-                        <v-list-item v-for="(item, index) in items" :key="index">
-                            <v-list-item-icon v-if="item.complete">
-                                <v-btn icon @click="incompleteItem(item.id)">
-                                    <v-icon>mdi-checkbox-marked</v-icon>
-                                </v-btn>
-                            </v-list-item-icon>
-                            <v-list-item-icon v-else @click="completeItem(item.id)">
-                                <v-btn icon>
-                                    <v-icon>mdi-checkbox-blank-outline</v-icon>
-                                </v-btn>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>{{ item.name }}</v-list-item-title>
-                                <v-list-item-subtitle>
-                                    Qty: {{ item.quantity }}
-                                </v-list-item-subtitle>
-                            </v-list-item-content>
-                            <v-list-item-action>
-                                <v-btn icon @click="deleteItem($event, item.id)">
-                                    <v-icon color="grey lighten-1">mdi-close</v-icon>
-                                </v-btn>
-                            </v-list-item-action>
-                        </v-list-item>
+                        <v-list dense color="transparent">
+                            <v-list-item v-for="(item, index) in items" :key="index">
+                                <v-list-item-icon v-if="item.complete">
+                                    <v-btn icon class="list-icon" @click="incompleteItem(item.id)">
+                                        <v-icon>mdi-checkbox-marked</v-icon>
+                                    </v-btn>
+                                </v-list-item-icon>
+                                <v-list-item-icon v-else @click="completeItem(item.id)">
+                                    <v-btn icon class="list-icon">
+                                        <v-icon>mdi-checkbox-blank-outline</v-icon>
+                                    </v-btn>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                                    <v-list-item-subtitle>
+                                        Qty: {{ item.quantity }}
+                                    </v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-icon>
+                                    <v-btn icon class="list-icon" @click="deleteItem($event, item.id)">
+                                        <v-icon color="grey lighten-1">mdi-close</v-icon>
+                                    </v-btn>
+                                </v-list-item-icon>
+                            </v-list-item>
+                        </v-list>
                     </div>
                     <div v-else class="body-2 text-center mt-6">
                         You have not added any items to your shopping list yet.

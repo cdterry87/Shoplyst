@@ -37,3 +37,8 @@ body .v-application .logo,
   min-width: 60px;
 }
 
+.v-btn--fab.v-size--default.list-icon {
+  height: 32px !important;
+  width: 32px !important;
+}
+

@@ -27,3 +27,8 @@ body .v-application .logo, .logo {
 .v-btn.add.v-size--x-large {
     min-width: 60px;
 }
+
+.v-btn--fab.v-size--default.list-icon {
+    height: 32px !important;
+    width: 32px !important;
+}

@@ -6,6 +6,9 @@
                 Sign Out
             </v-btn>
         </div>
+        <div class="mt-5 mb-5">
+            <v-divider></v-divider>
+        </div>
         <v-layout row>
             <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
                 <div class="title text-center mb-3">
@@ -22,7 +25,7 @@
                     </v-form>
                 </div>
             </v-flex>
-            <v-flex xs12 class="mt-3 mb-3">
+            <v-flex xs12 class="mt-5 mb-5">
                 <v-divider></v-divider>
             </v-flex>
             <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
