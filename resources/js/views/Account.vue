@@ -17,8 +17,8 @@
                 <Loading v-if="loadingAccount" />
                 <div v-else>
                     <v-form method="POST" id="accountForm" @submit.prevent="updateAccount" ref="form" lazy-validation>
-                        <v-text-field color="white" label="Full Name" filled prepend-inner-icon="mdi-account" v-model="user.name" id="name" name="name" type="text" :rules="[v => !!v || 'Name is required']" required></v-text-field>
-                        <v-text-field color="white" label="Email" filled prepend-inner-icon="mdi-email" v-model="user.email" id="email" name="email" type="email" :rules="[v => !!v || 'Email is required']" required></v-text-field>
+                        <v-text-field color="white" label="Full Name" filled prepend-inner-icon="mdi-account" v-model="user.name" id="name" name="name" type="text" :rules="[v => !!v || 'Name is required']" autocomplete="off" required></v-text-field>
+                        <v-text-field color="white" label="Email" filled prepend-inner-icon="mdi-email" v-model="user.email" id="email" name="email" type="email" :rules="[v => !!v || 'Email is required']" autocomplete="off" required></v-text-field>
                         <div class="text-center">
                             <v-btn type="submit" color="pink darken-2">Update</v-btn>
                         </div>
@@ -33,8 +33,8 @@
                     Update Password
                 </div>
                 <v-form method="POST" id="accountForm" @submit.prevent="changePassword" ref="form" lazy-validation>
-                    <v-text-field color="white" v-model="password" label="Password" filled prepend-inner-icon="mdi-lock" id="password" name="password" type="password" required></v-text-field>
-                    <v-text-field color="white" v-model="password_confirmation" label="Confirm Password" filled prepend-inner-icon="mdi-lock" id="password_confirmation" name="password_confirmation" type="password" required></v-text-field>
+                    <v-text-field color="white" v-model="password" label="Password" filled prepend-inner-icon="mdi-lock" id="password" name="password" type="password" autocomplete="off" required></v-text-field>
+                    <v-text-field color="white" v-model="password_confirmation" label="Confirm Password" filled prepend-inner-icon="mdi-lock" id="password_confirmation" name="password_confirmation" type="password" autocomplete="off" required></v-text-field>
                     <div class="text-center">
                         <v-btn type="submit" color="pink darken-2">Update</v-btn>
                     </div>

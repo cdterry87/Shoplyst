@@ -21,10 +21,10 @@
                         <v-form method="POST" id="listForm" @submit.prevent="addItem" ref="form" lazy-validation>
                             <v-layout row>
                                 <v-flex xs12>
-                                    <v-text-field hide-details color="white" v-model="name" label="New Item" filled prepend-inner-icon="mdi-basket" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'Item name is required']" required></v-text-field>
+                                    <v-text-field hide-details color="white" v-model="name" label="New Item" filled prepend-inner-icon="mdi-basket" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'Item name is required']" autocomplete="off" required></v-text-field>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <v-text-field hide-details color="white" v-model="quantity" label="Quantity" filled prepend-inner-icon="mdi-numeric" id="quantity" name="quantity" type="text" :rules="[v => v > 0 || 'Quantity must be greater than 0']" required></v-text-field>
+                                    <v-text-field hide-details color="white" v-model="quantity" label="Quantity" filled prepend-inner-icon="mdi-numeric" id="quantity" name="quantity" type="text" :rules="[v => v > 0 || 'Quantity must be greater than 0']" autocomplete="off" required></v-text-field>
                                 </v-flex>
                                 <v-flex xs4>
                                     <v-btn type="submit" block x-large class="pink darken-2 add">
@@ -36,7 +36,8 @@
                         </v-form>
                     </div>
                 </div>
-                <div>
+                <Loading v-if="loadingItems" />
+                <div v-else>
                     <div v-if="items.length > 0">
                         <v-list dense color="transparent">
                             <v-list-item v-for="(item, index) in items" :key="index">
@@ -86,7 +87,7 @@
         data() {
             return {
                 showAddForm: false,
-                loadingItems: false,
+                loadingItems: true,
                 name: '',
                 quantity: '1',
                 list: '',
@@ -101,8 +102,6 @@
                 })
             },
             getItems() {
-                this.loadingItems = true
-
                 axios.get('/api/items/' + this.id)
                 .then(response => {
                     this.items = response.data

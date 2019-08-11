@@ -6,7 +6,7 @@
                     Add Shopping List
                 </div>
                 <v-form method="POST" id="listForm" @submit.prevent="addList" ref="form" lazy-validation>
-                    <v-text-field hide-details color="white" v-model="name" label="New Shopping List" filled prepend-inner-icon="mdi-cart" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'List name is required']" required>
+                    <v-text-field hide-details color="white" v-model="name" label="New Shopping List" filled prepend-inner-icon="mdi-cart" id="name" name="name" type="text" maxlength="250" :rules="[v => !!v || 'List name is required']" autocomplete="off" required>
                         <template v-slot:append-outer>
                             <v-btn type="submit" x-large style="top: -16px" class="pink darken-2 add">
                                 <v-icon>mdi-plus</v-icon>
@@ -22,7 +22,8 @@
                 <div class="title text-center mb-3">
                     My Shopping Lists
                 </div>
-                <div>
+                <Loading v-if="loadingLists" />
+                <div v-else>
                     <div v-if="lists.length > 0">
                         <v-list-item v-for="(list, index) in lists" :key="index" :to="'/list/' + list.id">
                             <v-list-item-content>
@@ -63,8 +64,6 @@
         },
         methods: {
             getLists() {
-                this.loadingLists = true
-
                 axios.get('/api/lists')
                 .then(response => {
                     this.lists = response.data
