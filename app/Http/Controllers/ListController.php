@@ -83,4 +83,21 @@ class ListController extends Controller
             'message' => $status ? 'Your list was deleted successfully!' : 'An error occurred while trying to delete your list. Try again later.'
         ]);
     }
+
+    /**
+     * Updated total.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function total(Request $request, Lists $list)
+    {
+        $list->total = $request->total;
+        $status = $list->save();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Total updated successfully!' : 'Total could not be updated at this time. Try again later.'
+        ]);
+    }
 }

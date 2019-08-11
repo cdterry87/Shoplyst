@@ -1,7 +1,7 @@
 <template>
     <v-container fluid grid-list-md>
         <v-layout row>
-            <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
+            <v-flex xs12 sm10 offset-sm1 md8 offset-md2 lg6 offset-lg3>
                 <div class="title text-center mb-3">
                     Add Shopping List
                 </div>
@@ -18,7 +18,7 @@
             </v-flex>
         </v-layout>
         <v-layout row class="mt-3">
-            <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
+            <v-flex xs12 sm10 offset-sm1 md8 offset-md2 lg6 offset-lg3>
                 <div class="title text-center mb-3">
                     My Shopping Lists
                 </div>
@@ -29,6 +29,7 @@
                             <v-list-item-content>
                                 <v-list-item-title v-html="list.name"></v-list-item-title>
                                 <v-list-item-subtitle v-html="list.created_date"></v-list-item-subtitle>
+                                <v-list-item-subtitle><span v-if="list.total > 0">$ {{ list.total }}</span></v-list-item-subtitle>
                             </v-list-item-content>
                             <v-list-item-action>
                                 <v-btn icon @click="deleteList($event, list.id)">

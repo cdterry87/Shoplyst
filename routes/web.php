@@ -32,6 +32,9 @@ Route::group(['middleware' => 'auth'], function () {
         // Lists
         Route::resource('/lists', 'ListController');
 
+        // Update List Total
+        Route::post('/lists/{list}/total', 'ListController@total');
+
         // List Items
         Route::get('/items/{list}', 'ListItemController@index');
         Route::resource('/items', 'ListItemController');

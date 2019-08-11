@@ -50,17 +50,17 @@ export default {
     created() {
         Event.$on('success', message => {
             this.snackbar.message = message
-            this.snackbar.color = 'pink darken-2'
+            this.snackbar.color = 'info'
             this.snackbar.enabled = true
         })
         Event.$on('warning', message => {
             this.snackbar.message = message
-            this.snackbar.color = 'blue-grey darken-3'
+            this.snackbar.color = 'warning'
             this.snackbar.enabled = true
         })
         Event.$on('error', message => {
             this.snackbar.message = message
-            this.snackbar.color = 'purple darken-4'
+            this.snackbar.color = 'error'
             this.snackbar.enabled = true
         })
     }

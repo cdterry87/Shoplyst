@@ -1,11 +1,32 @@
 <template>
     <v-container fluid grid-list-md>
         <v-layout row>
-            <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
+            <v-flex xs12 sm10 offset-sm1 md8 offset-md2 lg6 offset-lg3>
                 <div class="text-center mb-3">
                     <h1 class="headline">{{ list.name }}</h1>
                     <h2 class="body-2 grey--text text--lighten-1">{{ list.created_date }}</h2>
                 </div>
+                <v-form method="POST" id="totalForm" @submit.prevent="updateTotal" ref="form" lazy-validation>
+                    <div class="text-center mb-3">
+                        <v-btn color="cyan" v-if="!showTotalForm" @click="showTotalForm = true">
+                            <v-icon>mdi-currency-usd</v-icon>
+                            {{ total }}
+                        </v-btn>
+                        <v-layout row v-else>
+                                <v-flex xs7 sm8 md9>
+                                    <v-text-field hide-details color="white" v-model="total" label="Shopping Total" filled prepend-inner-icon="mdi-currency-usd" id="total" name="total" type="text" maxlength="11" autocomplete="off" :rules="[v => !!v || 'Total is required']" required></v-text-field>
+                                </v-flex>
+                                <v-flex xs5 sm4 md3>
+                                    <v-btn type="submit" color="green" icon>
+                                        <v-icon>mdi-check</v-icon>
+                                    </v-btn>
+                                    <v-btn icon @click="showTotalForm = !showTotalForm" color="red">
+                                        <v-icon>mdi-close</v-icon>
+                                    </v-btn>
+                                </v-flex>
+                        </v-layout>
+                    </div>
+                </v-form>
                 <div>
                     <v-btn block class="pink darken-2 mb-2" @click="showAddForm = !showAddForm">
                         <span v-if="!showAddForm">
@@ -87,10 +108,12 @@
         data() {
             return {
                 showAddForm: false,
+                showTotalForm: false,
                 loadingItems: true,
                 name: '',
                 quantity: '1',
                 list: '',
+                total: '0.00',
                 items: []
             }
         },
@@ -99,6 +122,9 @@
                 axios.get('/api/lists/' + this.id)
                 .then(response => {
                     this.list = response.data
+                    if (this.list.total > 0) {
+                        this.total = this.list.total
+                    }
                 })
             },
             getItems() {
@@ -133,6 +159,21 @@
                     this.$refs.form.resetValidation()
                     this.$refs.form.$el.name.focus()
                 }
+            },
+            updateTotal() {
+                let total = this.total
+
+                axios.post('/api/lists/' + this.id + '/total', { total })
+                .then(response => {
+                    this.total = total
+
+                    Event.$emit('success', response.data.message)
+                })
+                .catch(function (error) {
+                    Event.$emit('error', response.data.message)
+                })
+
+                this.showTotalForm = false
             },
             completeItem(item_id) {
                 axios.post('/api/items/' + item_id + '/complete')
