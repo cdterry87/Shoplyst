@@ -8,6 +8,13 @@
                             <h1 class="display-1 logo">{{ title }}</h1>
                             <h2 class="title mt-2">Sign in to do someting great!</h2>
                         </div>
+                        <div class="mb-4">
+                            <v-alert type="info" :value="true">
+                                <div class="subtitle-1">To demo this application, use the following credentials:</div>
+                                <div class="subtitle-2">Username: admin@example.com</div>
+                                <div class="subtitle-2">Password: password</div>
+                            </v-alert>
+                        </div>
                         <div class="mt-3 mb-5" v-if="errorMessages.length > 0">
                             <Errors :errors="errorMessages" />
                         </div>
